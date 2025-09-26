@@ -10,10 +10,14 @@ import Login from "./pages/Auth/Login";
 import SignUp from "./pages/Auth/SignUp";
 import AllInvoices from "./pages/Invoices/AllInvoices";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import InvoiceDetail from "./pages/Invoices/InvoiceDetail";
+import CreateInvoice from "./pages/Invoices/CreateInvoice";
+import ProfilePage from "./pages/Profile/ProfilePage";
 
 function App() {
   return (
-    <div>
+    <div className="">
       <Router>
         <Routes>
           {/* Public Routes */}
