@@ -3,7 +3,7 @@ import cors from "cors";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import connectDb from './config/database.js';
-
+import authRouter   from './routes/authroutes.js'
 const app = express();
 dotenv.config();
 app.use(
@@ -14,18 +14,23 @@ app.use(
   })
 );
 
+
 // Middleware to parse JSON bodies
 app.use(express.json());
 
 const PORT = process.env.PORT || 8000;
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.json({message : "Hello World"});
 });
+
+app.use("/api/auth" , authRouter)
+
+
 
 
 connectDb().then(() => {
-  app.listen(process.env.PORT || 8000, () => {
+  app.listen(PORT, () => {
     console.log(`Server is running at ${process.env.PORT}`);
   });
 });

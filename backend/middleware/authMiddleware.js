@@ -1,12 +1,10 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
-
 const authMiddleware = async (req, res, next) => {
   const token = await req.headers.authorization?.split(" ")[1];
   if (!token) {
     res.status(401).json({ message: "No token, authorization denied" });
   }
-
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = await User.findById(decoded.id).select("-password");
@@ -16,4 +14,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = { authMiddleware };
+export { authMiddleware };

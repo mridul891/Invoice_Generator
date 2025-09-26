@@ -1,5 +1,6 @@
-import { mongo, Schema } from "mongoose";
-import { bcrypt } from 'bcryptjs';
+import { Schema } from "mongoose";
+import mongoose from "mongoose";
+import bcrypt from 'bcryptjs';
 
 const userSchema = new Schema(
   {
@@ -16,8 +17,8 @@ const userSchema = new Schema(
 // password hashing middleware can be added here
 userSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next();
-    const bcrypt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, bcrypt);
+    const bcryptjs = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, bcryptjs);
     next();
 })
 
@@ -26,4 +27,6 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 }
-module.exports = mongoose.model("User", userSchema);
+
+const User =  await mongoose.model("User", userSchema);
+export default User;
