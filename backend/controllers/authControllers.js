@@ -63,8 +63,8 @@ export const loginUser = async (req, res) => {
         phone: user.phone || "",
         token: token,
       });
-    }else{
-        return res.status(401).json({ message: "Invalid credentials" });
+    } else {
+      return res.status(401).json({ message: "Invalid credentials" });
     }
   } catch (error) {
     console.error(error);
@@ -76,13 +76,53 @@ export const loginUser = async (req, res) => {
 // @route  GET /api/auth/me
 // @access Private
 
-export const getMe = (req, res) => {
-  res.send("Get User Profile");
+export const getMe = async (req, res) => {
+  try {
+    console.log(req)
+    const user = await User.findById(req.user.id);
+    if (user){
+      res.status(200).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        businessName: user.businessName || "",
+        address: user.address || "",
+        phone: user.phone || "",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
 };
 
 // @desc   Update user profile
 // @route  PUT /api/auth/me
 // @access Private
-export const updateUserProfile = (req, res) => {
-  res.send("Update User Profile");
+export const updateUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (user){
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      user.businessName = req.body.businessName || user.businessName;
+      user.address = req.body.address || user.address;
+      user.phone = req.body.phone || user.phone;
+
+      const updateUser = await user.save();
+      res.status(200).json({
+        _id: updateUser._id,
+        name: updateUser.name,
+        email: updateUser.email,
+        businessName: updateUser.businessName || "",
+        address: updateUser.address || "",
+        phone: updateUser.phone || "",
+      });
+    }else{
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
 };
