@@ -3,7 +3,9 @@ import cors from "cors";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import connectDb from './config/database.js';
-import authRouter   from './routes/authroutes.js'
+import authRouter   from './routes/authRoutes.js'
+import invoiceRouter from "./routes/invoiceRoutes.js";
+
 const app = express();
 dotenv.config();
 app.use(
@@ -25,9 +27,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth" , authRouter)
+app.use("/api/invoice" , invoiceRouter)
 
 
-
+// Connect to the database and start the server
 
 connectDb().then(() => {
   app.listen(PORT, () => {
