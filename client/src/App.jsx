@@ -14,24 +14,30 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import InvoiceDetail from "./pages/Invoices/InvoiceDetail";
 import CreateInvoice from "./pages/Invoices/CreateInvoice";
 import ProfilePage from "./pages/Profile/ProfilePage";
+import { AuthProvider } from "./context/AuthContext";
+import ForgetPassword from "./pages/Auth/ForgetPassword";
+import ResetPassword from "./pages/Auth/ResetPassword";
 
 function App() {
   return (
-    <div className="">
+    <AuthProvider>
       <Router>
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/forgot-password" element={<ForgetPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
 
-          {/* PRotected Routes */}
+          {/* Protected Routes */}
           <Route path="/" element={<ProtectedRoute />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="invoices" element={<AllInvoices />} />
             <Route path="invoices/:id" element={<InvoiceDetail />} />
             <Route path="invoices/new" element={<CreateInvoice />} />
             <Route path="profile" element={<ProfilePage />} />
+            
           </Route>
           {/* Catch all routes  */}
           <Route path="*" element={<Navigate to="/" replace />} />
@@ -45,7 +51,7 @@ function App() {
           },
         }}
       />
-    </div>
+    </AuthProvider>
   );
 }
 

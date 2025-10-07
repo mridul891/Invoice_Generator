@@ -5,8 +5,7 @@ import { Eye, EyeOff, Mail, Lock, User, ArrowRight, Check } from 'lucide-react';
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
+        name: '',
         email: '',
         password: '',
         confirmPassword: ''
