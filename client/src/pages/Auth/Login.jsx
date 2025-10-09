@@ -35,10 +35,11 @@ const Login = () => {
       const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, formData);
 
       if (response.status === 200) {
-        const { token, user } = response.data;
+        console.log("Login successful:", response.data);
+        const { token } = response.data;
 
         if (token) {
-          login(token, user);
+          login(response.data, token);
         }
         navigate("/dashboard");
       } else {
@@ -128,58 +129,7 @@ const Login = () => {
                   )}
                 </button>
               </div>
-              <div className="mt-4 flex flex-col gap-1">
-                <p
-                  className={`text-sm  ${
-                    formData.password.length > 8
-                      ? "text-green-500"
-                      : "text-red-500"
-                  }`}
-                >
-                  <Check className={`inline w-4 h-4 mr-1 `} />
-                  Password Length should be greater than 8 characters
-                </p>
-                <p
-                  className={`text-sm  ${
-                    !/[a-z]/.test(formData.password)
-                      ? "text-red-500"
-                      : "text-green-500"
-                  }`}
-                >
-                  <Check className={`inline w-4 h-4 mr-1 `} />
-                  Password must contain at least one lowercase letter
-                </p>
-                <p
-                  className={`text-sm ${
-                    !/[A-Z]/.test(formData.password)
-                      ? "text-red-500"
-                      : "text-green-500"
-                  }`}
-                >
-                  <Check className={`inline w-4 h-4 mr-1 `} />
-                  Password must contain at least one upperCase letter
-                </p>{" "}
-                <p
-                  className={`text-sm ${
-                    !/[0-9]/.test(formData.password)
-                      ? "text-red-500"
-                      : "text-green-500"
-                  }`}
-                >
-                  <Check className={`inline w-4 h-4 mr-1 `} />
-                  Password must contain at least one Number letter
-                </p>{" "}
-                <p
-                  className={`text-sm ${
-                    !/[^A-Za-z0-9]/.test(formData.password)
-                      ? "text-red-500"
-                      : "text-green-500"
-                  }`}
-                >
-                  <Check className={`inline w-4 h-4 mr-1 `} />
-                  Password must contain at least one special character
-                </p>
-              </div>
+
             </motion.div>
 
             {/* Remember & Forgot */}

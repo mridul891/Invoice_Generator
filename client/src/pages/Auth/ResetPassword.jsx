@@ -67,6 +67,7 @@ const ResetPassword = () => {
     }
 
     const data = response.data;
+    console.log("Password reset successful:", data);
     localStorage.setItem("token", data.token);
 
     navigate("/login");
